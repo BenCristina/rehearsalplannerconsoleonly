@@ -96,9 +96,9 @@ public class AppNavigation {
                 continue;
             }
 
-            System.out.println("Available time slots:");
-            System.out.println("1: 9-12  | 2: 12-15 | 3: 15-18 | 4: 18-21");
-            System.out.print("Enter slots (comma-separated, e.g. 1,3): ");
+            System.out.println("Available time slots for " + day + ":");
+            System.out.println("'1' for 9-12 | '2' for 12-15 | '3' for 15-18 | '4' for 18-21");
+            System.out.print("Enter slots (comma-separated, e.g. 1,3 or 1,2,4): ");
 
             int[] slots = getValidSlots();
             if (slots == null) {
@@ -172,7 +172,8 @@ public class AppNavigation {
     }
 
     private void generateSchedule() {
-        schedule.generateSchedule();
+        // Implementation for generating schedule
+        System.out.println("Feature not implemented yet.");
     }
 
     private void detectSchedulingConflicts() {
