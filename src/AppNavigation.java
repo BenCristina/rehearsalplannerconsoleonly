@@ -17,23 +17,25 @@ public class AppNavigation {
             System.out.println("Main Menu:");
             System.out.println("1. Display Actor Information");
             System.out.println("2. Add Actor");
-            System.out.println("3. Set Availability");
-            System.out.println("4. Generate Schedule");
-            System.out.println("5. Detect Scheduling Conflicts");
-            System.out.println("6. Load and Save Data");
-            System.out.println("7. Exit");
+            System.out.println("3. Remove Actor");
+            System.out.println("4. Set Availability");
+            System.out.println("5. Generate Schedule");
+            System.out.println("6. Detect Scheduling Conflicts");
+            System.out.println("7. Load and Save Data");
+            System.out.println("8. Exit");
             System.out.print("Enter your choice: ");
 
-            int choice = getValidIntInput(1, 7);
+            int choice = getValidIntInput(1, 8);
 
             switch (choice) {
                 case 1: displayActorInformation(); break;
                 case 2: addActor(); break;
-                case 3: setActorAvailability(); break;
-                case 4: generateSchedule(); break;
-                case 5: detectSchedulingConflicts(); break;
-                case 6: handleDataOperations(); break;
-                case 7:
+                case 3: removeActor(); break;
+                case 4: setActorAvailability(); break;
+                case 5: generateSchedule(); break;
+                case 6: detectSchedulingConflicts(); break;
+                case 7: handleDataOperations(); break;
+                case 8:
                     System.out.println("Exiting app...");
                     scanner.close();
                     return;
@@ -64,6 +66,14 @@ public class AppNavigation {
         Actor actor = new Actor(firstName, lastName, email, phone);
         schedule.addActor(actor);
         System.out.printf("Actor added successfully: %s%n", actor);
+    }
+
+    private void removeActor() {
+        if (schedule.getActors().isEmpty()) {
+            System.out.println("No actors added yet.");
+            return;
+        }
+        schedule.removeActor(schedule.getActors().get(getValidIntInput(1, schedule.getActors().size()) - 1));
     }
 
     private void setActorAvailability() {
@@ -173,7 +183,8 @@ public class AppNavigation {
 
     private void generateSchedule() {
         // Implementation for generating schedule
-        System.out.println("Feature not implemented yet.");
+        // System.out.println("Feature not implemented yet.");
+        schedule.generateSchedule();
     }
 
     private void detectSchedulingConflicts() {
