@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class LoadSave {
-    private static final String FILE_PATH = "RehearsalPlanner.txt";
+    private static final String FILE_PATH = "RehearsalPlannerData.txt";
 
     public LoadSave() { }
 
