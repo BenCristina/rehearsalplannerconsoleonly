@@ -7,7 +7,7 @@ import java.util.TreeMap;
  * Each actor has a weekly schedule divided into four daily time slots (9-12, 12-15, 15-18, 18-21).
  */
 public class Actor extends Person {
-    // Maps each day to an array of 4 timer slots representing availability
+    // Maps each day to an array of four timer slots representing availability
     private Map<String, boolean[]> availability;
 
     // ANSI color codes for console output formatting
@@ -57,15 +57,6 @@ public class Actor extends Person {
     }
 
     /**
-     * Replaces the entire availability schedule
-     *
-     * @param availability New availability schedule
-     */
-    public void setAvailability(Map<String, boolean[]> availability) {
-        this.availability = availability;
-    }
-
-    /**
      * Initializes an empty availability schedule for all weekdays.
      * Creates four time slots per day, all set to unavailable by default.
      */
@@ -99,7 +90,6 @@ public class Actor extends Person {
      * Uses color coding for better visibility:
      * - Green: Available
      * - Red: Unavailable
-     *
      * Time slots are shown as: 9-12 | 12-15 | 15-18 | 18-21
      *
      * @return Formatted string with actor's details and availability
@@ -124,7 +114,7 @@ public class Actor extends Person {
             }
             availabilityString.append("\n");
         }
-        return super.toString() + "\nAvailability: \n" + availabilityString.toString();
+        return super.toString() + "\nAvailability: \n" + availabilityString;
     }
 
     /**

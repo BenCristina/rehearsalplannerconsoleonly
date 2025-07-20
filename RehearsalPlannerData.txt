@@ -3,7 +3,7 @@ Ben,Cristina,ben@ben.de,123654
 Monday:0011
 Thursday:0011
 Friday:0110
-Sunday:0000
+Sunday:0110
 Wednesday:1000
 Tuesday:0110
 Saturday:1110
@@ -34,5 +34,14 @@ Sunday:0011
 Wednesday:0000
 Tuesday:0101
 Saturday:0011
+END_ACTOR
+Tim,Smith,timmy89@hotmail.com,321456987
+Monday:0000
+Thursday:0010
+Friday:0000
+Sunday:0011
+Wednesday:0011
+Tuesday:0010
+Saturday:1100
 END_ACTOR
 END_FILE

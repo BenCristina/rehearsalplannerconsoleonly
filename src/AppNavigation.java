@@ -24,7 +24,7 @@ public class AppNavigation {
      * Handles all user interactions through a numbered menu system.
      */
     protected AppNavigation() {
-        // Display welcome message
+        // Display a welcome message
         System.out.println("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("Welcome to the Console Version of the RehearsalPlanner!");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
@@ -162,7 +162,7 @@ public class AppNavigation {
     private String normalizeDay(String day) {
         if (day == null || day.isEmpty()) return null;
 
-        // Capitalize first letter and lowercase the rest
+        // Capitalize the first letter and lowercase the rest
         day = day.substring(0, 1).toUpperCase() + day.substring(1).toLowerCase();
 
         return validDays.contains(day) ? day : null;

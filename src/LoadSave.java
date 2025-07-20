@@ -42,7 +42,7 @@ public class LoadSave {
                 lines.add(line);
             }
 
-            if (lines.isEmpty() || !lines.get(0).equals("REHEARSAL_PLANNER_DATA")) {
+            if (lines.isEmpty() || !lines.getFirst().equals("REHEARSAL_PLANNER_DATA")) {
                 System.out.println("File is empty or is not a valid RehearsalPlanner file.");
                 return actors;
             }
@@ -51,7 +51,7 @@ public class LoadSave {
             while (currentLine < lines.size() && !lines.get(currentLine).equals("END_FILE")) {
                 Actor actor = parseActorFromLines(lines.toArray(new String[0]), currentLine);
                 actors.add(actor);
-                // Skip to next actor
+                // Skip to the next actor
                 while (!lines.get(currentLine).equals("END_ACTOR")) {
                     currentLine++;
                 }
