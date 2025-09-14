@@ -39,23 +39,28 @@ public class LoadSave {
             List<String> lines = new ArrayList<>();
             String line;
             while ((line = reader.readLine()) != null) {
-                lines.add(line);
+                String trimmed = line.trim();
+                if (!trimmed.isEmpty()) {
+                    lines.add(trimmed);
+                }
             }
 
-            if (lines.isEmpty() || !lines.getFirst().equals("REHEARSAL_PLANNER_DATA")) {
+            if (lines.isEmpty() || !"REHEARSAL_PLANNER_DATA".equals(lines.get(0))) {
                 System.out.println("File is empty or is not a valid RehearsalPlanner file.");
                 return actors;
             }
 
             int currentLine = 1;
-            while (currentLine < lines.size() && !lines.get(currentLine).equals("END_FILE")) {
+            while (currentLine < lines.size() && !"END_FILE".equals(lines.get(currentLine))) {
                 Actor actor = parseActorFromLines(lines.toArray(new String[0]), currentLine);
                 actors.add(actor);
-                // Skip to the next actor
-                while (!lines.get(currentLine).equals("END_ACTOR")) {
+                // Skip to the next actor safely
+                while (currentLine < lines.size() && !"END_ACTOR".equals(lines.get(currentLine))) {
                     currentLine++;
                 }
-                currentLine++;
+                if (currentLine < lines.size()) {
+                    currentLine++; // move past END_ACTOR
+                }
             }
             System.out.println("Data loaded successfully from " + FILE_PATH);
         } catch (FileNotFoundException e) {
@@ -85,7 +90,14 @@ public class LoadSave {
     }
 
     private Actor parseActorFromLines(String[] lines, int startIndex) {
-        String[] personalInfo = lines[startIndex].split(",");
+        // Validate personal info line
+        if (startIndex >= lines.length) {
+            throw new IllegalArgumentException("Unexpected end of file while reading actor personal info.");
+        }
+        String[] personalInfo = lines[startIndex].split(",", 4);
+        if (personalInfo.length < 4) {
+            throw new IllegalArgumentException("Invalid actor personal info line: " + lines[startIndex]);
+        }
         String firstName = personalInfo[0];
         String lastName = personalInfo[1];
         String email = personalInfo[2];
@@ -94,16 +106,28 @@ public class LoadSave {
         Map<String, boolean[]> availability = new HashMap<>();
         int currentLine = startIndex + 1;
 
-        while(!lines[currentLine].equals("END_ACTOR")) {
-            String[] dayData = lines[currentLine].split(":");
+        while (currentLine < lines.length && !"END_ACTOR".equals(lines[currentLine])) {
+            String[] dayData = lines[currentLine].split(":", 2);
+            if (dayData.length != 2) {
+                throw new IllegalArgumentException("Invalid availability line: " + lines[currentLine]);
+            }
             String day = dayData[0];
+            String bits = dayData[1];
+            if (bits.length() < 4) {
+                throw new IllegalArgumentException("Invalid availability bitstring (expected 4): " + bits);
+            }
             boolean[] slots = new boolean[4];
             for (int i = 0; i < 4; i++) {
-                slots[i] = dayData[1].charAt(i) == '1';
+                char c = bits.charAt(i);
+                if (c != '0' && c != '1') {
+                    throw new IllegalArgumentException("Invalid availability character (expected 0/1): " + c);
+                }
+                slots[i] = c == '1';
             }
             availability.put(day, slots);
             currentLine++;
         }
+
         return new Actor(firstName, lastName, email, phone, availability);
     }
 }
