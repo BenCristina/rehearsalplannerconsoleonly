@@ -92,7 +92,28 @@ public class AppNavigation {
             System.out.println("No actors added yet.");
             return;
         }
-        schedule.removeActor(schedule.getActors().get(getValidIntInput(1, schedule.getActors().size()) - 1));
+
+        // Display actor selection menu
+        System.out.println("\nSelect the actor to remove:");
+        for (int i = 0; i < schedule.getActors().size(); i++) {
+            System.out.printf("%d. %s%n", i + 1, schedule.getActors().get(i));
+        }
+
+        // Get actor selection
+        System.out.print("Enter actor number to remove: ");
+        int index = getValidIntInput(1, schedule.getActors().size()) -1;
+        Actor actorToRemove = schedule.getActors().get(index);
+
+        // Confirm deletion
+        System.out.printf("Are you sure you want to remove actor %s? (Y/N): ", actorToRemove);
+        Boolean confirm = getYesNoInput();
+        if (confirm == null || !confirm) {
+            System.out.println("Deletion cancelled.");
+            return;
+        }
+
+        schedule.removeActor(actorToRemove);
+        System.out.printf("Actor removed successfully: %s%n", actorToRemove);
     }
 
     /**
