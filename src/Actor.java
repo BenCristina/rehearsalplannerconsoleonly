@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Represents an actor in the rehearsal planning system.
  * Extends Person class with additional functionality for managing rehearsal availability.
@@ -9,6 +10,9 @@ import java.util.TreeMap;
 public class Actor extends Person {
     // Maps each day to an array of four timer slots representing availability
     private Map<String, boolean[]> availability;
+
+    private static final AtomicInteger actorId = new AtomicInteger(1);
+    private final int id;
 
     // ANSI color codes for console output formatting
     private static final String ANSI_GREEN = "\u001B[32m"; // Used for available slots
@@ -26,9 +30,11 @@ public class Actor extends Person {
      */
     public Actor(String firstName, String lastName, String email, String phone) {
         super(firstName, lastName, email, phone);
+        this.id = actorId.getAndIncrement();
         availability = new HashMap<>();
         initAvailability();
     }
+
 
     /**
      * Creates a new Actor with a predefined availability schedule.
@@ -41,6 +47,7 @@ public class Actor extends Person {
      */
     public Actor(String firstName, String lastName, String email, String phone, Map<String, boolean[]> availability) {
         super(firstName, lastName, email, phone);
+        this.id = actorId.getAndIncrement();
         this.availability = new HashMap<>();
         if (availability != null) {
             this.availability.putAll(availability);
@@ -84,6 +91,10 @@ public class Actor extends Person {
         }
     }
 
+    public int getId() {
+        return id;
+    }
+
     /**
      * Generates a formatted string representation of the actor's information
      * and their weekly availability schedule.
@@ -114,7 +125,7 @@ public class Actor extends Person {
             }
             availabilityString.append("\n");
         }
-        return super.toString() + "\nAvailability: \n" + availabilityString;
+        return String.format("[ID: %d] %s%nAvailability: %n%s", id, super.toString(), availabilityString); // Print actor details and availability
     }
 
     /**
