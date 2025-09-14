@@ -52,6 +52,6 @@ public class Person {
      */
     @Override
     public String toString() {
-        return String.format("ID: %d, %s %s, Email: %s, Phone: %s", staffId, firstName, lastName, email, phone);
+        return String.format("%s %s, Email: %s, Phone: %s", firstName, lastName, email, phone);
     }
 }
